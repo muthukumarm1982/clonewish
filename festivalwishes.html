@@ -19,6 +19,31 @@
       color: #f06414;
     }
 
+    .heart {
+      z-index: 999;
+      animation : heartfade 6s linear;
+      position: absolute;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: "";
+      background-color: #fc2a62;
+      position: absolute;
+      height: 30px;
+      width: 45px;
+      border-radius: 15px 0px 0px 15px;
+    }
+
+    .heart:before {
+      transform: rotate(45deg);
+    }
+
+    .heart:after {
+      left: 10.5px;
+      transform: rotate(135deg);
+    }
+
     input[type=name],
     select {
       width: 100%;
@@ -60,6 +85,16 @@
 
     .footerbtn1 :active {
       box-shadow: none
+    }
+
+    @keyframes heartfade {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
     }
 
     @-webkit-keyframes footer {
@@ -740,170 +775,270 @@
 
   }
 
+  var brd = document.createElement("DIV");
+		document.body.insertBefore(brd, document.getElementById("board"));
+
+		const duration = 3000;
+		const speed = 0.5;
+		const cursorXOffset = 0;
+		const cursorYOffset = -5;
+
+		var hearts = [];
+		
+		function generateHeart(x, y, xBound, xStart, scale)
+		{
+			var heart = document.createElement("DIV");
+			heart.setAttribute('class', 'heart');
+			brd.appendChild(heart);
+			heart.time = duration;
+			heart.x = x;
+			heart.y = y;
+			heart.bound = xBound;
+			heart.direction = xStart;
+			heart.style.left = heart.x + "px";
+			heart.style.top = heart.y + "px";
+			heart.scale = scale;
+			heart.style.transform = "scale(" + scale + "," + scale + ")";
+			if(hearts == null)
+				hearts = [];
+			hearts.push(heart);
+			return heart;
+		}
+
+		var down = false;
+		var event = null;
+
+		document.onmousedown = function(e) {
+			down = true;
+			event = e;
+		}
+
+		document.onmouseup = function(e) {
+			down = false;
+		}
+
+		document.onmousemove = function(e) {
+			event = e;
+		}
+
+		document.ontouchstart = function(e) {
+			down = true;
+			event = e.touches[0];
+		}
+
+		document.ontouchend = function(e) {
+			down = false;
+		}
+
+		document.ontouchmove = function(e) {
+			event = e.touches[0];
+		}
+
+		var before = Date.now();
+		var id = setInterval(frame, 5);
+		var gr = setInterval(check, 100);
+
+		function frame()
+		{
+			var current = Date.now();
+			var deltaTime = current - before;
+			before = current;
+			for(i in hearts)
+			{
+				var heart = hearts[i];
+				heart.time -= deltaTime;
+				if(heart.time > 0)
+				{
+					heart.y -= speed;
+					heart.style.top = heart.y + "px";
+					heart.style.left = heart.x + heart.direction * heart.bound * Math.sin(heart.y * heart.scale / 30) / heart.y * 200 + "px";
+				}
+				else
+				{
+					heart.parentNode.removeChild(heart);
+					hearts.splice(i, 1);
+				}
+			}
+		}
+
+		function check()
+		{
+			if(down)
+			{
+				var start = 1 - Math.round(Math.random()) * 2;
+				var scale = Math.random() * Math.random() * 0.8 + 0.2;
+				var bound = 30 + Math.random() * 20;
+				generateHeart(event.pageX - brd.offsetLeft + cursorXOffset, event.pageY - brd.offsetTop + cursorYOffset, bound, start, scale);
+			}
+		}
+
   // Load init
   init();
+  generateHeart(300, 300, null, null, 10);
 
 </script>
 
-<body>
+<body style="background-color: #ffceed;">
 
-  <body class="bg" id="rakhi" style="background: linear-gradient(to bottom right, #f6ff00, #e1e8e7, #00ffe9);
+  <!-- <body class="bg" id="rakhi" style="background: linear-gradient(to bottom right, #f6ff00, #e1e8e7, #00ffe9);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
-    background-size: cover;">
+    background-size: cover;"> -->
 
+  <div class="heart"></div>
 
-    <center><span style="font-size: 20px;" color: #ff077a;">▅ ▆ ▇ █ HAPPY fes_name █ ▇ ▆ ▅</center>
-    <center>
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- Wishing 2 -->
-      <ins class="adsbygoogle" style="display:inline-block;width:300px;height:50px"
-        data-ad-client="ca-pub-4696491179456446" data-ad-slot="2568634816"></ins>
-      <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
-
-    </center>
-    <center>
-      <div class="container">
-        <div class="main-greeting">
-          <div align="center html2canvas-ignore">
-            <div style="font-size: 20px; font-weight: 500; color: Black;">
-              <p id="demo"></p>
-
-              <div dir="ltr" style="text-align: left;" trbidi="on">
-                
-              </div>
-              <br><br>
-
-              <center>
-                <figure>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-                      var a = prompt("Please Enter Your Name\n\n👇👇👇👇👇");
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-                  <h1 style="text-transform: uppercase;">
-                    <script type="text/javascript" language="Javascript">
-
-                      document.write(a);
-                    </script>
-                  </h1>
-
-                </figure>
-              </center>
-              <div class="vi" style="text-align: center;">
-
-    </center>
-    <br><br>
-    <center>
-      <p style="text-align: center;"><strong><span
-            style="background-color: #ffea00; color: #005f96; font-size: 18pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;Wishing
-            you a very </span></p>
-    </center>
-    <br>
-    <p style="text-align: center;"><strong><span
-          style="font-size: 21pt; font-family: 'comic sans ms', sans-serif; color: #ff7700;">✪ <span
-            style="font-family: 'trebuchet ms', geneva;">Happy fes_name</span> ✪</span></strong></p>
-    <br>
-    <p style="text-align: center;"><strong><span
-          style="background-color: #ff0000; color: #ffffff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;to
-          you and your lovely family </span></p>
-    <br>
-    <p style="text-align: center;"><span
-        style="background-color: #008000; color: #ffffff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;You
-        hold me when i am weak, care for me when i am sick.</span></p>
-    <br>
-    <p style="text-align: center;"><span
-        style="background-color: #ff00ff; color: #ffffff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;✪
-        When you are there my heart leaps. ✪</span></p>
-    <p style="text-align: center;"><span
-        style="background-color: #ff00ff; color: #ffffff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;✪
-        You make me love you more each day. ✪</span></p>
-    <br>
-
-    <br>
-    <center>
-      <div class="busi">
-        <h4>
-          <p style="text-transform: uppercase;font-size: 26px;color:#ffffff;">
-            <script type="text/javascript" language="Javascript">
-              document.write("by - " + a);
-            </script><br><br>
-          </p>
-        </h4>
-    </center>
-    <center>
-    </center>
-    </div>
-    </div>
+  <center><span style="font-size: 20px;" color: #ff077a;">▅ ▆ ▇ █ HAPPY VALENTINES DAY █ ▇ ▆ ▅</center>
+  <center>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- Wishing 2 -->
+    <ins class="adsbygoogle" style="display:inline-block;width:300px;height:50px"
+      data-ad-client="ca-pub-4696491179456446" data-ad-slot="2568634816"></ins>
     <script>
-      // Set the date we're counting down to
-      var countDownDate = new Date("October 10, 2018 00:00:00").getTime();
-
-      // Update the count down every 01 second
-      var x = setInterval(function () {
-
-        // Get todays date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now an the count down date
-        var distance = countDownDate - now;
-
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Display the result in the element with id="demo"
-        document.getElementById("demo").innerHTML = days + "<i> Days,</i> " + hours + " <i>Hrs,</i> "
-          + minutes + "<i> Min,</i> " + seconds + "<i> Sec</i> ";
-
-        // If the count down is finished, write some text 
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("demo").innerHTML = "🙏 Welcome 🙏";
-        }
-      }, 1000);
+      (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-    </div>
-    </div>
 
-  </body>
+  </center>
+  <center>
+    <div class="container">
+      <div class="main-greeting">
+        <div align="center html2canvas-ignore">
+          <div style="font-size: 20px; font-weight: 500; color: Black;">
+            <p id="demo"></p>
 
+            <div dir="ltr" style="text-align: center;" trbidi="on">
+
+            </div>
+            <br><br>
+
+            <center>
+              <figure>
+                <h1 style="text-transform: uppercase;">
+                  HONEY
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+                <h1 style="text-transform: uppercase;">
+                  <script type="text/javascript" language="Javascript">
+
+                    document.write(a);
+                  </script>
+                </h1>
+
+              </figure>
+            </center>
+            <div class="vi" style="text-align: center;">
+
+  </center>
+  <br><br>
+  <br><br>
+  <br><br>
+  <center>
+    <p style="text-align: center;"><strong><span
+          style="background-color: #ffea00; color: #005f96; font-size: 18pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;Wishing
+          you a very </span></p>
+  </center>
+  <br>
+  <p style="text-align: center;"><strong><span
+        style="font-size: 21pt; font-family: 'comic sans ms', sans-serif; color: #FF0000;">❣ <span
+          style="font-family: 'trebuchet ms', geneva;">Happy Valentines Day</span> ❣</span></strong></p>
+  <br>
+  <!-- <p style="text-align: center;"><strong><span
+          style="background-color: #ff0000; color: #ffffff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;
+           </span></p>
+    <br> -->
+  <p style="text-align: center;"><span
+      style="color: #008000; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;You
+      hold me when i am weak, care for me when i am sick.</span></p>
+  <br>
+  <p style="text-align: center;"><span
+      style="color: #ff00ff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;<span
+        style="color: #ff0000;">❣</span>
+      When you are there my heart leaps. </span><span style="color: #ff0000;">❣</span></p>
+  <p style="text-align: center;"><span
+      style="color: #ff00ff; font-size: 16pt; font-family: tahoma, arial, helvetica, sans-serif;">&nbsp;<span
+        style="color: #ff0000;">❣</span>
+      You make me love you more each day. </span><span style="color: #ff0000;">❣</span></p>
+  <br>
+
+  <br>
+  <center>
+    <div class="busi">
+      <h4>
+        <p style="text-transform: uppercase;font-size: 26px;color:#ffffff;">
+          <script type="text/javascript" language="Javascript">
+            document.write("by - Sam");
+          </script><br><br>
+        </p>
+      </h4>
+  </center>
+  <center>
+  </center>
+  </div>
+  </div>
+  <script>
+    // Set the date we're counting down to
+    var countDownDate = new Date("October 10, 2018 00:00:00").getTime();
+
+    // Update the count down every 01 second
+    var x = setInterval(function () {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now an the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element with id="demo"
+      document.getElementById("demo").innerHTML = days + "<i> Days,</i> " + hours + " <i>Hrs,</i> "
+        + minutes + "<i> Min,</i> " + seconds + "<i> Sec</i> ";
+
+      // If the count down is finished, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "🙏 Welcome 🙏";
+      }
+    }, 1000);
   </script>
+  </div>
+  </div>
+
+</body>
+
+</script>
 
 </html>
